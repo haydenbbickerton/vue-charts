@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue-Charts Basic Example</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script src="assets/vue-charts.min.js"></script>
+  </head>
+  <body>
+    <app>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 style="display:inline-block;">
+                            Multiple Data Sets
+                        </h4>
+                        <div class="btn-group pull-right" role="group">
+                            <!-- Clicking on a button will change the active set, which will update data (and subsequently the chart) -->
+                            <button 
+                                v-for="stat in statSets" 
+                                type="button" 
+                                class="btn btn-default"
+                                :class="{'active': activeSet == $key}"
+                                v-on:click="activeSet = $key"
+                            >
+                                {{ $key }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <vue-chart
+                            :chart-type="chartType"
+                            :columns="columns"
+                            :rows="rows"
+                            :options="options"
+                            >
+                        </vue-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </app>
+
+    <script type="text/javascript">
+
+    /*
+        As an example, here's some random data.This could be data from api, dynamic or
+        static, doesn't matter. Ideally your chart data should be inside the Vue instance 
+        under data, or pass it as a prop.
+
+        Any time the data is updated, the chart will auto update. Works great when paired
+        with props, computed values, etc.
+    */
+    var sampleData = [{
+        avg_cpc: 0.71,
+        avg_position: 1.6,
+        clicks: 677,
+        conversion_rate: 3.99,
+        conversions: 27,
+        converted_clicks: 26,
+        cost: 482.58,
+        cpa: 17.87,
+        date: '2015-02-7',
+        impressions: 72210,
+        interaction_rate: 0.94,
+        interactions: 677
+    }, {
+        avg_cpc: 0.69,
+        avg_position: 1.6,
+        clicks: 706,
+        conversion_rate: 5.10,
+        conversions: 36,
+        converted_clicks: 35,
+        cost: 489.65,
+        cpa: 13.6,
+        date: '2015-02-8',
+        impressions: 82977,
+        interaction_rate: 0.85,
+        interactions: 706
+    }, {
+        avg_cpc: 0.68,
+        avg_position: 1.6,
+        clicks: 727,
+        conversion_rate: 5.64,
+        conversions: 41,
+        converted_clicks: 36,
+        cost: 491.58,
+        cpa: 11.99,
+        date: '2015-02-9',
+        impressions: 84565,
+        interaction_rate: 0.86,
+        interactions: 727
+    }, {
+        avg_cpc: 0.74,
+        avg_position: 1.7,
+        clicks: 725,
+        conversion_rate: 5.10,
+        conversions: 37,
+        converted_clicks: 37,
+        cost: 539.15,
+        cpa: 14.57,
+        date: '2015-02-10',
+        impressions: 77596,
+        interaction_rate: 0.93,
+        interactions: 725
+    }, {
+        avg_cpc: 0.69,
+        avg_position: 1.6,
+        clicks: 671,
+        conversion_rate: 6.11,
+        conversions: 41,
+        converted_clicks: 39,
+        cost: 461.85,
+        cpa: 11.26,
+        date: '2015-02-11',
+        impressions: 75197,
+        interaction_rate: 0.89,
+        interactions: 671
+    }, {
+        avg_cpc: 0.76,
+        avg_position: 1.6,
+        clicks: 640,
+        conversion_rate: 4.38,
+        conversions: 28,
+        converted_clicks: 27,
+        cost: 483.94,
+        cpa: 17.28,
+        date: '2015-02-12',
+        impressions: 73198,
+        interaction_rate: 0.87,
+        interactions: 640
+    }, {
+        avg_cpc: 0.74,
+        avg_position: 1.6,
+        clicks: 588,
+        conversion_rate: 2.38,
+        conversions: 14,
+        converted_clicks: 12,
+        cost: 437.51,
+        cpa: 31.25,
+        date: '2015-02-13',
+        impressions: 71797,
+        interaction_rate: 0.82,
+        interactions: 588
+    }];
+
+    Vue.use(VueCharts);
+
+    new Vue({
+        el: 'app',
+        data: function () {
+            return {
+                chartType: 'LineChart',
+                statSets: {
+                    cost: {
+                        rows: ['date', 'cost', 'cpa'],
+                        columns: [
+                            {
+                                'type': 'date',
+                                'label' : 'Date'
+                            }, 
+                            {
+                                'type' : 'number',
+                                'label' : 'Cost'
+                            },
+                            {
+                                'type' : 'number',
+                                'label' : 'CPA'
+                            }
+                        ]
+                    },
+                    impact: {
+                        rows: ['date', 'clicks', 'impressions'],
+                        columns: [
+                            {
+                                'type': 'date',
+                                'label' : 'Date'
+                            }, 
+                            {
+                                'type' : 'number',
+                                'label' : 'Clicks'
+                            },
+                            {
+                                'type' : 'number',
+                                'label' : 'Impressions'
+                            }
+                        ]
+                    },
+                    outcome: {
+                        rows: ['date', 'conversions', 'cpa'],
+                        columns: [
+                            {
+                                'type': 'date',
+                                'label' : 'Date'
+                            }, 
+                            {
+                                'type' : 'number',
+                                'label' : 'Conversions'
+                            },
+                            {
+                                'type' : 'number',
+                                'label' : 'Cost per Conversion'
+                            }
+                        ]
+                    }
+                },
+                activeSet: 'cost',
+                options: {
+                    chart: {
+                        title: 'Chart Title',
+                        subtitle: 'Subtitle'
+                    },
+                    hAxis: {title: 'Date'},
+                    vAxis: {title: ''},
+                    height: 500,
+                    animation: {
+                        duration: 500,
+                        easing: 'out',
+                    }
+                }
+            }
+        },
+        computed: {
+          rows: function () {
+
+            // Get the rows of only the active set.
+            var statKeys = this.statSets[this.activeSet].rows;
+            
+            // Get the stats for this set.
+            return _
+                .chain(sampleData)
+                .mapValues(function(stat) {
+                    var picked = _.pick(stat, statKeys);
+
+                    picked['date'] = new Date(picked['date'])
+
+                    return _.values(picked)
+                })
+                .toArray()
+                .value();
+            
+          },
+          columns: function () {
+            return this.statSets[this.activeSet].columns
+          }
+        }
+        
+    })
+    </script>
+  </body>
+</html>
