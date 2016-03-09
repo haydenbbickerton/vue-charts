@@ -1,12 +1,14 @@
 # vue-charts
 [![Version](https://img.shields.io/npm/v/vue-charts.svg?style=flat-square)](https://www.npmjs.com/package/vue-charts)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
 [![License](https://img.shields.io/npm/l/vue-charts.svg?style=flat-square)](LICENSE)
 
 Google Charts plugin for Vue.js
 
 ## Demo
 - [Basic Line Chart](https://haydenbbickerton.github.io/vue-charts/basic.html)
-- [Multiple Sets of Data, with Update](https://haydenbbickerton.github.io/vue-charts/sets.html)
+- [Multiple Sets of Data, with auto-update](https://haydenbbickerton.github.io/vue-charts/sets.html)
+- [Events](https://haydenbbickerton.github.io/vue-charts/events.html)
 
 ## Installation
 
@@ -55,9 +57,9 @@ Vue.use(VueCharts)
         </tr>
         <tr>
             <td>chart-type</td>
-            <td><em>none, required</em></td>
+            <td><code>LineChart</code></td>
             <td>String</td>
-            <td>Required. The type of chart to create.</td>
+            <td>The type of chart to create.</td>
         </tr>
         <tr>
             <td>columns</td>
@@ -67,15 +69,21 @@ Vue.use(VueCharts)
         </tr>
         <tr>
             <td>rows</td>
-            <td><code>[]</code></td>
+            <td><em>none</em></td>
             <td>Array</td>
             <td>Chart rows.</td>
         </tr>
         <tr>
-            <td>options</td>
-            <td>Too much, check <a href="https://github.com/haydenbbickerton/vue-charts/blob/master/src/components/chart.js">chart.js</a>.</td>
+            <td>chart-events</td>
+            <td><em>none</em></td>
             <td>Object</td>
-            <td><a href="http://developers.google.com/chart/interactive/docs/customizing_charts">Google Charts Options</a></td>
+            <td><a href="https://developers.google.com/chart/interactive/docs/events" target="_blank">Google Charts Events</a>. See <a href="https://haydenbbickerton.github.io/vue-charts/events.html" target="_blank">Events Example</a></td>
+        </tr>
+        <tr>
+            <td>options</td>
+            <td><em>none</em></td>
+            <td>Object</td>
+            <td><a href="http://developers.google.com/chart/interactive/docs/customizing_charts" target="_blank">Google Charts Options</a></td>
         </tr>
     </tbody>
 </table>

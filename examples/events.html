@@ -10,6 +10,8 @@
   <body>
     <app>
         <vue-chart
+            chart-type="BarChart"
+            :chart-events="chartEvents"
             :columns="columns"
             :rows="rows"
             :options="options"
@@ -24,6 +26,14 @@
         el: 'app',
         data: function () {
             return {
+                chartEvents: {
+                    'select': function() {
+                        alert('YEEEEAAAAAH! Nice selection!');
+                    },
+                    'ready': function() { 
+                        alert('The chart is ready!');
+                    }
+                },
                 columns: [{
                     'type': 'string',
                     'label': 'Year'

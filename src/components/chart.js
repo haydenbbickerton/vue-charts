@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import loadCharts from '../utils/googleChartsLoader.js'
-import propsBinder from '../utils/propsBinder.js'
+import eventsBinder from '../utils/eventsBinder.js'
+import propsWatcher from '../utils/propsWatcher.js'
 
 let props = {
   packages: {
@@ -18,7 +19,16 @@ let props = {
   },
   chartType: {
     required: true,
-    type: String
+    type: String,
+    default: function () {
+      return 'LineChart'
+    }
+  },
+  chartEvents: {
+    type: Object,
+    default: function () {
+      return {}
+    }
   },
   columns: {
     required: true,
@@ -82,12 +92,15 @@ export default {
     loadCharts(self.packages, self.version)
       .then(self.drawChart)
       .then(function () {
-        // we con't want to bind props because it's a kind of "computed" property
-        const boundProps = props
-        delete boundProps.bounds
+        // we don't want to bind props because it's a kind of "computed" property
+        const watchProps = props
+        delete watchProps.bounds
 
-        // binding properties
-        propsBinder(self, boundProps)
+        // watching properties
+        propsWatcher(self, watchProps)
+
+        // binding events
+        eventsBinder(self, self.chart, self.chartEvents)
       })
       .catch(function (error) {
         throw error
