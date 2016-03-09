@@ -1,0 +1,16 @@
+{
+  'root': true,
+
+  'env': {
+    'browser': true,
+    'node': true
+  },
+
+  'globals': {
+    '_': true,
+    'google': true,
+    'Vue': true
+  },
+
+  'extends': 'standard'
+}
