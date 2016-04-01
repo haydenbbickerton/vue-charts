@@ -1,3 +1,6 @@
+# v0.1.1 / 2016-04-01
+- Fixed https://github.com/haydenbbickerton/vue-charts/issues/3
+
 # v0.1.0 / 2016-03-09
 - Added event handling
 

@@ -105,11 +105,7 @@ var props = {
     }
   },
   version: {
-    default: 'current',
-    coerce: function coerce(val) {
-      // They might pass in an integer, make it a string.
-      return _.toString(val);
-    }
+    default: 'current'
   },
   chartType: {
     required: true,
