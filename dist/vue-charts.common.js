@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.1.0
+ * vue-charts v0.1.1
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */
@@ -7,9 +7,6 @@
 
 var _ = require('lodash');
 _ = 'default' in _ ? _['default'] : _;
-
-var is_loading = false;
-var is_loaded = false;
 
 /*
     This lets us resolve the promise outside the
@@ -30,6 +27,9 @@ var makeDeferred = function makeDeferred() {
     reject: rejectPromise
   };
 };
+
+var is_loading = false;
+var is_loaded = false;
 
 // Our main promise
 var google_promise = makeDeferred();
@@ -96,6 +96,8 @@ var propsWatcher = (function (vue, props) {
     });
   });
 })
+
+var chartDeferred = makeDeferred();
 
 var props = {
   packages: {
@@ -184,7 +186,7 @@ var Chart = {
       // watching properties
       propsWatcher(self, watchProps);
 
-      // binding events
+      // Binding our events
       eventsBinder(self, self.chart, self.chartEvents);
     }).catch(function (error) {
       throw error;
@@ -266,15 +268,16 @@ var Chart = {
       // Set the datatable on this instance
       self.dataTable = self.wrapper.getDataTable();
 
-      // After chart is built, set it on this instance
+      // After chart is built, set it on this instance and resolve the promise.
       google.visualization.events.addOneTimeListener(self.wrapper, 'ready', function () {
         self.chart = self.wrapper.getChart();
+        chartDeferred.resolve();
       });
     },
     /**
      * Draw the chart.
      *
-     * @return void
+     * @return Promise
      */
     drawChart: function drawChart() {
       var self = this;
@@ -294,6 +297,9 @@ var Chart = {
 
       // Chart has been built/Data has been updated, draw the chart.
       self.wrapper.draw();
+
+      // Return promise. Resolves when chart finishes loading.
+      return chartDeferred.promise;
     }
   }
 };

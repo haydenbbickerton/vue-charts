@@ -1,7 +1,10 @@
 import _ from 'lodash'
-import loadCharts from '../utils/googleChartsLoader.js'
-import eventsBinder from '../utils/eventsBinder.js'
-import propsWatcher from '../utils/propsWatcher.js'
+import loadCharts from '../utils/googleChartsLoader'
+import eventsBinder from '../utils/eventsBinder'
+import propsWatcher from '../utils/propsWatcher'
+import makeDeferred from '../utils/makeDeferred'
+
+const chartDeferred = makeDeferred()
 
 let props = {
   packages: {
@@ -178,15 +181,16 @@ export default {
       // Set the datatable on this instance
       self.dataTable = self.wrapper.getDataTable()
 
-      // After chart is built, set it on this instance
+      // After chart is built, set it on this instance and resolve the promise.
       google.visualization.events.addOneTimeListener(self.wrapper, 'ready', function () {
         self.chart = self.wrapper.getChart()
+        chartDeferred.resolve()
       })
     },
     /**
      * Draw the chart.
      *
-     * @return void
+     * @return Promise
      */
     drawChart: function () {
       let self = this
@@ -206,6 +210,9 @@ export default {
 
       // Chart has been built/Data has been updated, draw the chart.
       self.wrapper.draw()
+
+      // Return promise. Resolves when chart finishes loading.
+      return chartDeferred.promise
     }
   }
 }

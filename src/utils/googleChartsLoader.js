@@ -1,25 +1,6 @@
+import makeDeferred from './makeDeferred'
 let is_loading = false
 let is_loaded = false
-
-/*
-    This lets us resolve the promise outside the
-    promise function itself.
- */
-let makeDeferred = function () {
-  let resolvePromise = null
-  let rejectPromise = null
-
-  let promise = new Promise(function (resolve, reject) {
-    resolvePromise = resolve
-    rejectPromise = reject
-  })
-
-  return {
-    promise: promise,
-    resolve: resolvePromise,
-    reject: rejectPromise
-  }
-}
 
 // Our main promise
 let google_promise = makeDeferred()
