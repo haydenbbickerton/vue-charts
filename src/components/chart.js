@@ -9,7 +9,7 @@ const chartDeferred = makeDeferred()
 let props = {
   packages: {
     type: Array,
-    default: function () {
+    default: () => {
       return ['corechart']
     }
   },
@@ -19,13 +19,13 @@ let props = {
   chartType: {
     required: true,
     type: String,
-    default: function () {
+    default: () => {
       return 'LineChart'
     }
   },
   chartEvents: {
     type: Object,
-    default: function () {
+    default: () => {
       return {}
     }
   },
@@ -35,13 +35,13 @@ let props = {
   },
   rows: {
     type: Array,
-    default: function () {
+    default: () => {
       return []
     }
   },
   options: {
     type: Object,
-    default: function () {
+    default: () => {
       return {
         chart: {
           title: 'Chart Title',
@@ -68,9 +68,9 @@ export default {
   name: 'vue-chart',
   props: props,
   template: '<div class="vue-chart-container">' +
-              '<div class="vue-chart" id="{{ chartId }}"></div>' +
-            '</div>',
-  data: function () {
+    '<div class="vue-chart" id="{{ chartId }}"></div>' +
+    '</div>',
+  data () {
     return {
       chart: null,
       /*
@@ -86,11 +86,11 @@ export default {
       hiddenColumns: []
     }
   },
-  ready: function () {
+  ready () {
     let self = this
     loadCharts(self.packages, self.version)
       .then(self.drawChart)
-      .then(function () {
+      .then(() => {
         // we don't want to bind props because it's a kind of "computed" property
         const watchProps = props
         delete watchProps.bounds
@@ -101,7 +101,7 @@ export default {
         // binding events
         eventsBinder(self, self.chart, self.chartEvents)
       })
-      .catch(function (error) {
+      .catch((error) => {
         throw error
       })
   },
@@ -112,12 +112,12 @@ export default {
      * @link https://developers.google.com/chart/interactive/docs/reference#DataTable
      * @return object
      */
-    buildDataTable: function () {
+    buildDataTable () {
       let self = this
 
       let dataTable = new google.visualization.DataTable()
 
-      _.each(self.columns, function (value) {
+      _.each(self.columns, (value) => {
         dataTable.addColumn(value)
       })
 
@@ -127,12 +127,13 @@ export default {
 
       return dataTable
     },
+
     /**
      * Update the datatable.
      *
      * @return void
      */
-    updateDataTable: function () {
+    updateDataTable () {
       let self = this
 
       // Remove all data from the datatable.
@@ -140,7 +141,7 @@ export default {
       self.dataTable.removeColumns(0, self.dataTable.getNumberOfColumns())
 
       // Add
-      _.each(self.columns, function (value) {
+      _.each(self.columns, (value) => {
         self.dataTable.addColumn(value)
       })
 
@@ -148,6 +149,7 @@ export default {
         self.dataTable.addRows(self.rows)
       }
     },
+
     /**
      * Initialize the wrapper
      *
@@ -155,7 +157,7 @@ export default {
      *
      * @return object
      */
-    buildWrapper: function (chartType, dataTable, options, containerId) {
+    buildWrapper (chartType, dataTable, options, containerId) {
       let wrapper = new google.visualization.ChartWrapper({
         chartType: chartType,
         dataTable: dataTable,
@@ -165,12 +167,13 @@ export default {
 
       return wrapper
     },
+
     /**
      * Build the chart.
      *
      * @return void
      */
-    buildChart: function () {
+    buildChart () {
       let self = this
 
       // If dataTable isn't set, build it
@@ -182,17 +185,18 @@ export default {
       self.dataTable = self.wrapper.getDataTable()
 
       // After chart is built, set it on this instance and resolve the promise.
-      google.visualization.events.addOneTimeListener(self.wrapper, 'ready', function () {
+      google.visualization.events.addOneTimeListener(self.wrapper, 'ready', () => {
         self.chart = self.wrapper.getChart()
         chartDeferred.resolve()
       })
     },
+
     /**
      * Draw the chart.
      *
      * @return Promise
      */
-    drawChart: function () {
+    drawChart () {
       let self = this
 
       // We don't have any (usable) data, or we don't have columns. We can't draw a chart without those.

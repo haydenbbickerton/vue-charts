@@ -1,7 +1,7 @@
 {
   "name": "vue-charts",
   "description": "Google Charts component for Vue.js",
-  "version": "0.1.11",
+  "version": "0.1.13",
   "author": {
     "name": "Hayden Bickerton",
     "email": "haydenbbickerton@gmail.com"

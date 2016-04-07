@@ -1,3 +1,6 @@
+# v0.1.13 / 2016-04-06
+- es6 tweaks 
+
 # v0.1.12 / 2016-04-06
 - Fixed https://github.com/haydenbbickerton/vue-charts/issues/4
 

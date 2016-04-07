@@ -16,14 +16,14 @@ export default (packages, version) => {
   let script = document.createElement('script')
   script.setAttribute('src', 'https://www.gstatic.com/charts/loader.js')
 
-  script.onreadystatechange = script.onload = function () {
+  script.onreadystatechange = script.onload = () => {
     // After the 'loader.js' is loaded, load our version and packages
     google.charts.load(version, {
       packages: packages
     })
 
     // After we've loaded Google Charts, resolve our promise
-    google.charts.setOnLoadCallback(function () {
+    google.charts.setOnLoadCallback(() => {
       is_loading = false
       is_loaded = true
       google_promise.resolve()

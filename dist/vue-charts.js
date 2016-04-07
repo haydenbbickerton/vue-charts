@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.1.11
+ * vue-charts v0.1.13
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */
@@ -195,6 +195,7 @@
         throw error;
       });
     },
+
     methods: {
       /**
        * Initialize the datatable and add the initial data.
@@ -202,6 +203,7 @@
        * @link https://developers.google.com/chart/interactive/docs/reference#DataTable
        * @return object
        */
+
       buildDataTable: function buildDataTable() {
         var self = this;
 
@@ -217,6 +219,8 @@
 
         return dataTable;
       },
+
+
       /**
        * Update the datatable.
        *
@@ -238,6 +242,8 @@
           self.dataTable.addRows(self.rows);
         }
       },
+
+
       /**
        * Initialize the wrapper
        *
@@ -255,6 +261,8 @@
 
         return wrapper;
       },
+
+
       /**
        * Build the chart.
        *
@@ -277,6 +285,8 @@
           chartDeferred.resolve();
         });
       },
+
+
       /**
        * Draw the chart.
        *
