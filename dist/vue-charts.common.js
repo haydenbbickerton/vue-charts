@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.1.1
+ * vue-charts v0.1.11
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */
@@ -186,7 +186,7 @@ var Chart = {
       // watching properties
       propsWatcher(self, watchProps);
 
-      // Binding our events
+      // binding events
       eventsBinder(self, self.chart, self.chartEvents);
     }).catch(function (error) {
       throw error;

@@ -1,3 +1,6 @@
+# v0.1.12 / 2016-04-06
+- Fixed https://github.com/haydenbbickerton/vue-charts/issues/4
+
 # v0.1.1 / 2016-04-01
 - Fixed https://github.com/haydenbbickerton/vue-charts/issues/3
 
