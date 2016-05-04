@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export default (vue, props) => {
+export function propsWatcher (vue, props) {
   /*
     Watch our props. Every time they change, redraw the chart.
    */
@@ -12,3 +12,5 @@ export default (vue, props) => {
     })
   })
 }
+
+export default propsWatcher

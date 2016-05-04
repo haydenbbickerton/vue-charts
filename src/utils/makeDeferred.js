@@ -2,7 +2,7 @@
     This lets us resolve the promise outside the
     promise function itself.
  */
-let makeDeferred = () => {
+export function makeDeferred () {
   let resolvePromise = null
   let rejectPromise = null
 

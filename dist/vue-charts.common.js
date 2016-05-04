@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.1.13
+ * vue-charts v0.1.14
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */
@@ -12,7 +12,8 @@ _ = 'default' in _ ? _['default'] : _;
     This lets us resolve the promise outside the
     promise function itself.
  */
-var makeDeferred = function makeDeferred() {
+
+function makeDeferred() {
   var resolvePromise = null;
   var rejectPromise = null;
 
@@ -26,7 +27,24 @@ var makeDeferred = function makeDeferred() {
     resolve: resolvePromise,
     reject: rejectPromise
   };
-};
+}
+
+function eventsBinder(vue, googleChart, events) {
+  // Loop through our events, create a listener for them, and
+  // attach our callback function to that event.
+  for (var event in events) {
+    var eventName = event;
+    var eventCallback = events[event];
+
+    if (eventName === 'ready') {
+      // The chart is already ready, so this event missed it's chance.
+      // We'll call it manually.
+      eventCallback();
+    } else {
+      google.visualization.events.addListener(googleChart, eventName, eventCallback);
+    }
+  }
+}
 
 var is_loading = false;
 var is_loaded = false;
@@ -34,7 +52,18 @@ var is_loaded = false;
 // Our main promise
 var google_promise = makeDeferred();
 
-var loadCharts = (function (packages, version) {
+function googleChartsLoader() {
+  var packages = arguments.length <= 0 || arguments[0] === undefined ? ['corechart'] : arguments[0];
+  var version = arguments.length <= 1 || arguments[1] === undefined ? 'current' : arguments[1];
+
+  if (!Array.isArray(packages)) {
+    throw new TypeError('packages must be an array');
+  }
+
+  if (version !== 'current' && typeof version !== 'number') {
+    throw new TypeError('version must be a number, or "current"');
+  }
+
   // Google only lets you load it once, so we'll only run once.
   if (is_loading || is_loaded) {
     return google_promise.promise;
@@ -63,26 +92,9 @@ var loadCharts = (function (packages, version) {
   document.getElementsByTagName('head')[0].appendChild(script);
 
   return google_promise.promise;
-})
+}
 
-var eventsBinder = (function (vue, googleChart, events) {
-  // Loop through our events, create a listener for them, and
-  // attach our callback function to that event.
-  for (var event in events) {
-    var eventName = event;
-    var eventCallback = events[event];
-
-    if (eventName === 'ready') {
-      // The chart is already ready, so this event missed it's chance.
-      // We'll call it manually.
-      eventCallback();
-    } else {
-      google.visualization.events.addListener(googleChart, eventName, eventCallback);
-    }
-  }
-})
-
-var propsWatcher = (function (vue, props) {
+function propsWatcher(vue, props) {
   /*
     Watch our props. Every time they change, redraw the chart.
    */
@@ -95,7 +107,7 @@ var propsWatcher = (function (vue, props) {
       deep: _.isObject(type)
     });
   });
-})
+}
 
 var chartDeferred = makeDeferred();
 
@@ -178,7 +190,7 @@ var Chart = {
   },
   ready: function ready() {
     var self = this;
-    loadCharts(self.packages, self.version).then(self.drawChart).then(function () {
+    googleChartsLoader(self.packages, self.version).then(self.drawChart).then(function () {
       // we don't want to bind props because it's a kind of "computed" property
       var watchProps = props;
       delete watchProps.bounds;

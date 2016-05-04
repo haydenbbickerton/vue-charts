@@ -5,7 +5,15 @@ let is_loaded = false
 // Our main promise
 let google_promise = makeDeferred()
 
-export default (packages, version) => {
+export function googleChartsLoader (packages = ['corechart'], version = 'current') {
+  if (!Array.isArray(packages)) {
+    throw new TypeError('packages must be an array')
+  }
+
+  if (version !== 'current' && typeof version !== 'number') {
+    throw new TypeError('version must be a number, or "current"')
+  }
+
   // Google only lets you load it once, so we'll only run once.
   if (is_loading || is_loaded) {
     return google_promise.promise
@@ -35,3 +43,5 @@ export default (packages, version) => {
 
   return google_promise.promise
 }
+
+export default googleChartsLoader

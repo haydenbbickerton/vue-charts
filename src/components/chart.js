@@ -1,8 +1,10 @@
 import _ from 'lodash'
-import loadCharts from '../utils/googleChartsLoader'
-import eventsBinder from '../utils/eventsBinder'
-import propsWatcher from '../utils/propsWatcher'
-import makeDeferred from '../utils/makeDeferred'
+import {
+  eventsBinder,
+  googleChartsLoader as loadCharts,
+  makeDeferred,
+  propsWatcher
+} from '../utils/index'
 
 const chartDeferred = makeDeferred()
 
@@ -17,7 +19,6 @@ let props = {
     default: 'current'
   },
   chartType: {
-    required: true,
     type: String,
     default: () => {
       return 'LineChart'

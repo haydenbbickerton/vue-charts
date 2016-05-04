@@ -1,4 +1,4 @@
-export default (vue, googleChart, events) => {
+export function eventsBinder (vue, googleChart, events) {
   // Loop through our events, create a listener for them, and
   // attach our callback function to that event.
   for (let event in events) {
@@ -14,3 +14,5 @@ export default (vue, googleChart, events) => {
     }
   }
 }
+
+export default eventsBinder
