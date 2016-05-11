@@ -5,7 +5,13 @@ var uglify = require('uglify-js')
 var babel = require('rollup-plugin-babel')
 var replace = require('rollup-plugin-replace')
 var pack = require('../package.json')
-var banner = require('./banner')
+var version = process.env.VERSION || pack.version
+var banner =
+  '/*!\n' +
+  ' * ' + pack.name + ' v' + version + '\n' +
+  ' * (c) ' + new Date().getFullYear() + ' ' + pack.author.name + '\n' +
+  ' * Released under the ' + pack.license + ' License.\n' +
+  ' */'
 
 // update main file
 var main = fs
@@ -83,7 +89,6 @@ function toUpper (_, c) {
 }
 
 const classifyRE = /(?:^|[-_\/])(\w)/g
-
 function classify (str) {
   return str.replace(classifyRE, toUpper)
 }

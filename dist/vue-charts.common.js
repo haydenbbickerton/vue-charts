@@ -12,7 +12,6 @@ _ = 'default' in _ ? _['default'] : _;
     This lets us resolve the promise outside the
     promise function itself.
  */
-
 function makeDeferred() {
   var resolvePromise = null;
   var rejectPromise = null;
@@ -122,7 +121,6 @@ var props = {
     default: 'current'
   },
   chartType: {
-    required: true,
     type: String,
     default: function _default() {
       return 'LineChart';

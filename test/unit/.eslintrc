@@ -1,0 +1,28 @@
+{
+  'env': {
+    'browser': true,
+    'node': true,
+    'mocha': true
+  },
+
+  'globals': {
+    '_': true,
+    'google': true,
+    'Vue': true,
+    'VueCharts': true,
+    'isIE': true,
+    'isIE9': true,
+    'describe': true,
+    'it': true,
+    'beforeEach': true,
+    'afterEach': true,
+    'expect': true,
+    'spyOn': true,
+    'wait': true
+  },
+
+  'extends': 'standard',
+  'rules': {
+    'padded-blocks': 0
+  }
+}
