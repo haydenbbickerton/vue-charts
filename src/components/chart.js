@@ -87,6 +87,11 @@ export default {
       hiddenColumns: []
     }
   },
+  events: {
+    redrawChart () {
+      this.drawChart()
+    }
+  },
   ready () {
     let self = this
     loadCharts(self.packages, self.version)

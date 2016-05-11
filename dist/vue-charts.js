@@ -189,6 +189,12 @@
         hiddenColumns: []
       };
     },
+
+    events: {
+      redrawChart: function redrawChart() {
+        this.drawChart();
+      }
+    },
     ready: function ready() {
       var self = this;
       googleChartsLoader(self.packages, self.version).then(self.drawChart).then(function () {

@@ -20,7 +20,8 @@
     "build": "node build/build.js",
     "clean": "rm -rf dist/*",
     "lint": "eslint src build",
-    "unit": "karma start build/karma.conf.js --single-run"
+    "unit": "karma start build/karma.conf.js --single-run",
+    "test": "npm run lint && npm run unit"
   },
   "repository": {
     "type": "git",
