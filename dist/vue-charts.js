@@ -48,11 +48,11 @@
     }
   }
 
-  var is_loading = false;
-  var is_loaded = false;
+  var isLoading = false;
+  var isLoaded = false;
 
   // Our main promise
-  var google_promise = makeDeferred();
+  var googlePromise = makeDeferred();
 
   function googleChartsLoader() {
     var packages = arguments.length <= 0 || arguments[0] === undefined ? ['corechart'] : arguments[0];
@@ -67,11 +67,11 @@
     }
 
     // Google only lets you load it once, so we'll only run once.
-    if (is_loading || is_loaded) {
-      return google_promise.promise;
+    if (isLoading || isLoaded) {
+      return googlePromise.promise;
     }
 
-    is_loading = true;
+    isLoading = true;
 
     var script = document.createElement('script');
     script.setAttribute('src', 'https://www.gstatic.com/charts/loader.js');
@@ -84,16 +84,16 @@
 
       // After we've loaded Google Charts, resolve our promise
       google.charts.setOnLoadCallback(function () {
-        is_loading = false;
-        is_loaded = true;
-        google_promise.resolve();
+        isLoading = false;
+        isLoaded = true;
+        googlePromise.resolve();
       });
     };
 
     // Insert our script into the DOM
     document.getElementsByTagName('head')[0].appendChild(script);
 
-    return google_promise.promise;
+    return googlePromise.promise;
   }
 
   function propsWatcher(vue, props) {
