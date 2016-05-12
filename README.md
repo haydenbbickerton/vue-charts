@@ -1,5 +1,6 @@
 # vue-charts
 [![Version](https://img.shields.io/npm/v/vue-charts.svg?style=flat-square)](https://www.npmjs.com/package/vue-charts)
+[![Status](https://img.shields.io/circleci/project/haydenbbickerton/vue-charts/master.svg?style=flat-square)](https://circleci.com/gh/haydenbbickerton/vue-charts/tree/master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
 [![License](https://img.shields.io/npm/l/vue-charts.svg?style=flat-square)](LICENSE)
 
@@ -9,11 +10,12 @@ Google Charts plugin for Vue.js
 - [Basic Line Chart](https://haydenbbickerton.github.io/vue-charts/basic.html)
 - [Multiple Sets of Data, with auto-update](https://haydenbbickerton.github.io/vue-charts/sets.html)
 - [Events](https://haydenbbickerton.github.io/vue-charts/events.html)
+- [Redraw on window resize](https://haydenbbickerton.github.io/vue-charts/redraw.html)
 
 ## Installation
 
 ```shell
-npm install --save vue-charts
+npm install --save-dev vue-charts
 ```
 
 ### Usage
