@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue-Charts Basic Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="../dist/vue-charts.js"></script>
+  </head>
+  <body>
+    <app>
+      <div>
+        <vue-chart
+            :columns="columns"
+            :rows="rows"
+            :options="options"
+            v-ref:chartobj
+        ></vue-chart>
+        <div style="margin-left:20px;">
+          <input type="checkbox" v-model="showSales" >Show Sales
+        </div>
+      </div>
+    </app>
+
+    <script type="text/javascript">
+
+    Vue.use(VueCharts);
+
+    new Vue({
+        el: 'app',
+        data: function () {
+            return {
+                showSales: true,
+                columns: [{
+                    'type': 'string',
+                    'label': 'Year'
+                }, {
+                    'type': 'number',
+                    'label': 'Sales'
+                }, {
+                    'type': 'number',
+                    'label': 'Expenses'
+                }],
+                rows: [
+                    ['2004', 1000, 400],
+                    ['2005', 1170, 460],
+                    ['2006', 660, 1120],
+                    ['2007', 1030, 540]
+                ],
+                options: {
+                    title: 'Company Performance',
+                    hAxis: {
+                        title: 'Year',
+                        minValue: '2004',
+                        maxValue: '2007'
+                    },
+                    vAxis: {
+                        title: '',
+                        minValue: 300,
+                        maxValue: 1200
+                    },
+                    width: 900,
+                    height: 500,
+                    curveType: 'function'
+                }
+            }
+        },
+        watch: {
+          'showSales': function (newVal, oldVal) {
+            if (newVal) {           // checbox is checked
+              this.$refs.chartobj.drawChart();
+            }
+            else {    // unchecked - hide sales
+              var dataTable = this.$refs.chartobj.dataTable;
+              var dataView = new google.visualization.DataView(dataTable);
+              dataView.hideColumns([1]);
+              var chart = this.$refs.chartobj.chart;
+              chart.draw(dataView, this.options);
+            }
+          },
+        },
+    })
+    </script>
+  </body>
+</html>
