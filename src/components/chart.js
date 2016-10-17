@@ -69,7 +69,7 @@ export default {
   name: 'vue-chart',
   props: props,
   template: '<div class="vue-chart-container">' +
-    '<div class="vue-chart" id="{{ chartId }}"></div>' +
+    '<div class="vue-chart" :id="chartId"></div>' +
     '</div>',
   data () {
     return {
@@ -92,7 +92,7 @@ export default {
       this.drawChart()
     }
   },
-  ready () {
+  mounted () {
     let self = this
     loadCharts(self.packages, self.version)
       .then(self.drawChart)

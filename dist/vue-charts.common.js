@@ -52,8 +52,8 @@ var isLoaded = false;
 var googlePromise = makeDeferred();
 
 function googleChartsLoader() {
-  var packages = arguments.length <= 0 || arguments[0] === undefined ? ['corechart'] : arguments[0];
-  var version = arguments.length <= 1 || arguments[1] === undefined ? 'current' : arguments[1];
+  var packages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['corechart'];
+  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'current';
 
   if (!Array.isArray(packages)) {
     throw new TypeError('packages must be an array');
@@ -170,7 +170,7 @@ var props = {
 var Chart = {
   name: 'vue-chart',
   props: props,
-  template: '<div class="vue-chart-container">' + '<div class="vue-chart" id="{{ chartId }}"></div>' + '</div>',
+  template: '<div class="vue-chart-container">' + '<div class="vue-chart" :id="chartId"></div>' + '</div>',
   data: function data() {
     return {
       chart: null,
@@ -192,7 +192,7 @@ var Chart = {
       this.drawChart();
     }
   },
-  ready: function ready() {
+  mounted: function mounted() {
     var self = this;
     googleChartsLoader(self.packages, self.version).then(self.drawChart).then(function () {
       // we don't want to bind props because it's a kind of "computed" property
@@ -216,7 +216,6 @@ var Chart = {
      * @link https://developers.google.com/chart/interactive/docs/reference#DataTable
      * @return object
      */
-
     buildDataTable: function buildDataTable() {
       var self = this;
 
@@ -331,7 +330,7 @@ var Chart = {
 };
 
 function install(Vue) {
-  var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   Vue.component('vue-chart', Chart);
 }

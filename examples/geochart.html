@@ -10,6 +10,7 @@
   <body>
     <app>
         <vue-chart
+            chart-type="GeoChart"
             :columns="columns"
             :rows="rows"
             :options="options"
@@ -26,35 +27,22 @@
             return {
                 columns: [{
                     'type': 'string',
-                    'label': 'Year'
+                    'label': 'Country'
                 }, {
                     'type': 'number',
-                    'label': 'Sales'
-                }, {
-                    'type': 'number',
-                    'label': 'Expenses'
+                    'label': 'Popularity'
                 }],
                 rows: [
-                    ['2004', 1000, 400],
-                    ['2005', 1170, 460],
-                    ['2006', 660, 1120],
-                    ['2007', 1030, 540]
+                    ['Germany', 200],
+                    ['United States', 300],
+                    ['Brazil', 400],
+                    ['Canada', 600],
+                    ['France', 201]
                 ],
                 options: {
-                    title: 'Company Performance',
-                    hAxis: {
-                        title: 'Year',
-                        minValue: '2004',
-                        maxValue: '2007'
-                    },
-                    vAxis: {
-                        title: '',
-                        minValue: 300,
-                        maxValue: 1200
-                    },
+                    title: 'Popularity by Countries',
                     width: 900,
                     height: 500,
-                    curveType: 'function'
                 }
             }
         },

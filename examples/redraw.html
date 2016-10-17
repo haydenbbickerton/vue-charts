@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Vue-Charts Redraw Example</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="../dist/vue-charts.js"></script>
   </head>
@@ -58,10 +58,20 @@
                 }
             }
         },
+        created() {
+          const self = this;
+          this.$on('redrawChart', function() {
+            for (idx in self.$children) {
+              self.$children[idx].$emit('redrawChart');
+            }
+            // console.log(self.$children);
+          });
+        }
     })
 
     jQuery(window).resize(function () {
-      yoyo.$broadcast('redrawChart');
+      console.log('event emitted');
+      yoyo.$emit('redrawChart');
     });
     </script>
   </body>

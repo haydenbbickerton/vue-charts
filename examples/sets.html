@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
     <script src="../dist/vue-charts.js"></script>
   </head>
   <body>
@@ -24,14 +24,14 @@
                         </h4>
                         <div class="btn-group pull-right" role="group">
                             <!-- Clicking on a button will change the active set, which will update data (and subsequently the chart) -->
-                            <button 
-                                v-for="stat in statSets" 
-                                type="button" 
+                            <button
+                                v-for="(stat, key) in statSets"
+                                type="button"
                                 class="btn btn-default"
-                                :class="{'active': activeSet == $key}"
-                                v-on:click="activeSet = $key"
+                                :class="{'active': activeSet == key}"
+                                v-on:click="activeSet = key"
                             >
-                                {{ $key }}
+                                {{ key }}
                             </button>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
 
     /*
         As an example, here's some random data.This could be data from api, dynamic or
-        static, doesn't matter. Ideally your chart data should be inside the Vue instance 
+        static, doesn't matter. Ideally your chart data should be inside the Vue instance
         under data, or pass it as a prop.
 
         Any time the data is updated, the chart will auto update. Works great when paired
@@ -158,7 +158,7 @@
 
     new Vue({
         el: 'app',
-        data: function () {
+        data() {
             return {
                 chartType: 'LineChart',
                 statSets: {
@@ -168,7 +168,7 @@
                             {
                                 'type': 'date',
                                 'label' : 'Date'
-                            }, 
+                            },
                             {
                                 'type' : 'number',
                                 'label' : 'Cost'
@@ -185,7 +185,7 @@
                             {
                                 'type': 'date',
                                 'label' : 'Date'
-                            }, 
+                            },
                             {
                                 'type' : 'number',
                                 'label' : 'Clicks'
@@ -202,7 +202,7 @@
                             {
                                 'type': 'date',
                                 'label' : 'Date'
-                            }, 
+                            },
                             {
                                 'type' : 'number',
                                 'label' : 'Conversions'
@@ -235,7 +235,7 @@
 
             // Get the rows of only the active set.
             var statKeys = this.statSets[this.activeSet].rows;
-            
+
             // Get the stats for this set.
             return _
                 .chain(sampleData)
@@ -248,13 +248,13 @@
                 })
                 .toArray()
                 .value();
-            
+
           },
           columns: function () {
             return this.statSets[this.activeSet].columns
           }
         }
-        
+
     })
     </script>
   </body>
