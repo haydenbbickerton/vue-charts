@@ -68,9 +68,17 @@ let props = {
 export default {
   name: 'vue-chart',
   props: props,
-  template: '<div class="vue-chart-container">' +
-    '<div class="vue-chart" :id="chartId"></div>' +
-    '</div>',
+  render(h){
+    const self = this;
+    return h('div', {class: 'vue-chart-container'}, [
+      h('div', {
+        attrs: {
+          id: self.chartId,
+          class: 'vue-chart',
+        }
+      })
+    ]);
+  },
   data () {
     return {
       chart: null,

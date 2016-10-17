@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.1.14
+ * vue-charts v0.2.0
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */
@@ -173,7 +173,20 @@
   var Chart = {
     name: 'vue-chart',
     props: props,
-    template: '<div class="vue-chart-container">' + '<div class="vue-chart" :id="chartId"></div>' + '</div>',
+    /*
+    template: '<div class="vue-chart-container">' +
+      '<div class="vue-chart" :id="chartId"></div>' +
+      '</div>',
+      */
+    render: function render(h) {
+      var self = this;
+      return h('div', { class: 'vue-chart-container' }, [h('div', {
+        attrs: {
+          id: self.chartId,
+          class: 'vue-chart'
+        }
+      })]);
+    },
     data: function data() {
       return {
         chart: null,
