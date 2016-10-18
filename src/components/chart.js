@@ -18,6 +18,9 @@ let props = {
   version: {
     default: 'current'
   },
+  mapsApiKey: {
+    default: false,
+  },
   chartType: {
     type: String,
     default: () => {
@@ -102,7 +105,7 @@ export default {
   },
   mounted () {
     let self = this
-    loadCharts(self.packages, self.version)
+    loadCharts(self.packages, self.version, self.mapsApiKey)
       .then(self.drawChart)
       .then(() => {
         // we don't want to bind props because it's a kind of "computed" property

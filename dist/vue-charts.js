@@ -57,13 +57,14 @@
   function googleChartsLoader() {
     var packages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['corechart'];
     var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'current';
+    var mapsApiKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     if (!Array.isArray(packages)) {
       throw new TypeError('packages must be an array');
     }
 
-    if (version !== 'current' && typeof version !== 'number') {
-      throw new TypeError('version must be a number, or "current"');
+    if (version !== 'current' && typeof version !== 'number' && version !== 'upcoming') {
+      throw new TypeError('version must be a number, "upcoming" or "current"');
     }
 
     // Google only lets you load it once, so we'll only run once.
@@ -78,9 +79,15 @@
 
     script.onreadystatechange = script.onload = function () {
       // After the 'loader.js' is loaded, load our version and packages
-      google.charts.load(version, {
+      var options = {
         packages: packages
-      });
+      };
+
+      if (mapsApiKey) {
+        options['mapsApiKey'] = mapsApiKey;
+      }
+
+      google.charts.load(version, options);
 
       // After we've loaded Google Charts, resolve our promise
       google.charts.setOnLoadCallback(function () {
@@ -122,6 +129,9 @@
     },
     version: {
       default: 'current'
+    },
+    mapsApiKey: {
+      default: false
     },
     chartType: {
       type: String,
@@ -173,11 +183,6 @@
   var Chart = {
     name: 'vue-chart',
     props: props,
-    /*
-    template: '<div class="vue-chart-container">' +
-      '<div class="vue-chart" :id="chartId"></div>' +
-      '</div>',
-      */
     render: function render(h) {
       var self = this;
       return h('div', { class: 'vue-chart-container' }, [h('div', {
@@ -210,7 +215,7 @@
     },
     mounted: function mounted() {
       var self = this;
-      googleChartsLoader(self.packages, self.version).then(self.drawChart).then(function () {
+      googleChartsLoader(self.packages, self.version, self.mapsApiKey).then(self.drawChart).then(function () {
         // we don't want to bind props because it's a kind of "computed" property
         var watchProps = props;
         delete watchProps.bounds;
