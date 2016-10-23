@@ -18,6 +18,9 @@ let props = {
   version: {
     default: 'current'
   },
+  mapsApiKey: {
+    default: false,
+  },
   chartType: {
     type: String,
     default: () => {
@@ -68,9 +71,17 @@ let props = {
 export default {
   name: 'vue-chart',
   props: props,
-  template: '<div class="vue-chart-container">' +
-    '<div class="vue-chart" id="{{ chartId }}"></div>' +
-    '</div>',
+  render(h){
+    const self = this;
+    return h('div', {class: 'vue-chart-container'}, [
+      h('div', {
+        attrs: {
+          id: self.chartId,
+          class: 'vue-chart',
+        }
+      })
+    ]);
+  },
   data () {
     return {
       chart: null,
@@ -92,9 +103,9 @@ export default {
       this.drawChart()
     }
   },
-  ready () {
+  mounted () {
     let self = this
-    loadCharts(self.packages, self.version)
+    loadCharts(self.packages, self.version, self.mapsApiKey)
       .then(self.drawChart)
       .then(() => {
         // we don't want to bind props because it's a kind of "computed" property
