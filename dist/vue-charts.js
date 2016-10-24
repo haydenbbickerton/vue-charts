@@ -1,5 +1,5 @@
 /*!
- * vue-charts v0.2.0
+ * vue-charts v0.2.1
  * (c) 2016 Hayden Bickerton
  * Released under the MIT License.
  */

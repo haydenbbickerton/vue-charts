@@ -19,7 +19,7 @@ let props = {
     default: 'current'
   },
   mapsApiKey: {
-    default: false,
+    default: false
   },
   chartType: {
     type: String,
@@ -71,16 +71,16 @@ let props = {
 export default {
   name: 'vue-chart',
   props: props,
-  render(h){
-    const self = this;
+  render (h) {
+    const self = this
     return h('div', {class: 'vue-chart-container'}, [
       h('div', {
         attrs: {
           id: self.chartId,
-          class: 'vue-chart',
+          class: 'vue-chart'
         }
       })
-    ]);
+    ])
   },
   data () {
     return {
