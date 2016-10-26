@@ -5,7 +5,7 @@ let isLoaded = false
 // Our main promise
 let googlePromise = makeDeferred()
 
-export function googleChartsLoader (packages = ['corechart'], version = 'current', mapsApiKey = false) {
+export function googleChartsLoader (packages = ['corechart'], version = 'current', mapsApiKey = false, language = 'en') {
   if (!Array.isArray(packages)) {
     throw new TypeError('packages must be an array')
   }
@@ -27,7 +27,8 @@ export function googleChartsLoader (packages = ['corechart'], version = 'current
   script.onreadystatechange = script.onload = () => {
     // After the 'loader.js' is loaded, load our version and packages
     var options = {
-      packages: packages
+      packages: packages,
+      language: language
     }
 
     if (mapsApiKey) {
