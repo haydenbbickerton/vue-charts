@@ -58,6 +58,7 @@
     var packages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['corechart'];
     var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'current';
     var mapsApiKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var language = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'en';
 
     if (!Array.isArray(packages)) {
       throw new TypeError('packages must be an array');
@@ -80,7 +81,8 @@
     script.onreadystatechange = script.onload = function () {
       // After the 'loader.js' is loaded, load our version and packages
       var options = {
-        packages: packages
+        packages: packages,
+        language: language
       };
 
       if (mapsApiKey) {
@@ -132,6 +134,10 @@
     },
     mapsApiKey: {
       default: false
+    },
+    language: {
+      type: String,
+      default: 'en'
     },
     chartType: {
       type: String,
@@ -215,7 +221,7 @@
     },
     mounted: function mounted() {
       var self = this;
-      googleChartsLoader(self.packages, self.version, self.mapsApiKey).then(self.drawChart).then(function () {
+      googleChartsLoader(self.packages, self.version, self.mapsApiKey, self.language).then(self.drawChart).then(function () {
         // we don't want to bind props because it's a kind of "computed" property
         var watchProps = props;
         delete watchProps.bounds;
