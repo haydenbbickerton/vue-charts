@@ -1,14 +1,12 @@
-import _ from 'lodash'
-
 export function propsWatcher (vue, props) {
   /*
     Watch our props. Every time they change, redraw the chart.
    */
-  _.each(props, ({type: type}, attribute) => {
+  Object.entries(props).forEach(([attribute, {type: type}]) => {
     vue.$watch(attribute, () => {
       vue.drawChart()
     }, {
-      deep: _.isObject(type)
+      deep: type instanceof Object
     })
   })
 }
