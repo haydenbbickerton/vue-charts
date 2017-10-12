@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {
   eventsBinder,
   googleChartsLoader as loadCharts,
@@ -138,11 +137,11 @@ export default {
 
       let dataTable = new google.visualization.DataTable()
 
-      _.each(self.columns, (value) => {
+      self.columns.forEach((value) => {
         dataTable.addColumn(value)
       })
 
-      if (!_.isEmpty(self.rows)) {
+      if (self.rows.length) {
         dataTable.addRows(self.rows)
       }
 
@@ -162,11 +161,11 @@ export default {
       self.dataTable.removeColumns(0, self.dataTable.getNumberOfColumns())
 
       // Add
-      _.each(self.columns, (value) => {
+      self.columns.forEach((value) => {
         self.dataTable.addColumn(value)
       })
 
-      if (!_.isEmpty(self.rows)) {
+      if (self.rows.length) {
         self.dataTable.addRows(self.rows)
       }
     },
@@ -198,7 +197,7 @@ export default {
       let self = this
 
       // If dataTable isn't set, build it
-      let dataTable = _.isEmpty(self.dataTable) ? self.buildDataTable() : self.dataTable
+      let dataTable = !self.dataTable.length ? self.buildDataTable() : self.dataTable
 
       self.wrapper = self.buildWrapper(self.chartType, dataTable, self.options, self.chartId)
 
@@ -221,11 +220,11 @@ export default {
       let self = this
 
       // We don't have any (usable) data, or we don't have columns. We can't draw a chart without those.
-      if ((!_.isEmpty(self.rows) && !_.isObjectLike(self.rows)) || _.isEmpty(self.columns)) {
+      if (self.rows.lenght === 0 || !self.columns.length) {
         return
       }
 
-      if (_.isNull(self.chart)) {
+      if (self.chart === null) {
         // We haven't built the chart yet, so JUST. DO. IT!
         self.buildChart()
       } else {
