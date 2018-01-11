@@ -239,5 +239,12 @@ export default {
       // Return promise. Resolves when chart finishes loading.
       return chartDeferred.promise
     }
+  },
+  watch: {
+    options () {
+      if (this.wrapper) {
+        this.wrapper.setOptions(this.options)
+      }
+    }
   }
 }
